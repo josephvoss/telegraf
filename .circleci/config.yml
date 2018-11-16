@@ -104,19 +104,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - 'test-go-1.10':
-          requires:
-            - 'deps'
-          filters:
-            tags:
-              only: /.*/
       - 'test-go-1.11':
-          requires:
-            - 'deps'
-          filters:
-            tags:
-              only: /.*/
-      - 'test-go-1.11-386':
           requires:
             - 'deps'
           filters:
@@ -125,45 +113,4 @@ workflows:
       - 'package':
           requires:
             - 'test-go-1.9'
-            - 'test-go-1.10'
             - 'test-go-1.11'
-            - 'test-go-1.11-386'
-      - 'release':
-          requires:
-            - 'test-go-1.9'
-            - 'test-go-1.10'
-            - 'test-go-1.11'
-            - 'test-go-1.11-386'
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
-  nightly:
-    jobs:
-      - 'deps'
-      - 'test-go-1.9':
-          requires:
-            - 'deps'
-      - 'test-go-1.10':
-          requires:
-            - 'deps'
-      - 'test-go-1.11':
-          requires:
-            - 'deps'
-      - 'test-go-1.11-386':
-          requires:
-            - 'deps'
-      - 'nightly':
-          requires:
-            - 'test-go-1.9'
-            - 'test-go-1.10'
-            - 'test-go-1.11'
-            - 'test-go-1.11-386'
-    triggers:
-      - schedule:
-          cron: "0 7 * * *"
-          filters:
-            branches:
-              only:
-                - master
